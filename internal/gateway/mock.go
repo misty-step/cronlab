@@ -165,6 +165,7 @@ func (m *MockClient) Run(ctx context.Context, id string) (RunResult, error) {
 		CronID:     id,
 		Status:     "success",
 		Output:     fmt.Sprintf("mock run for %s", cron.Name),
+		Stdout:     fmt.Sprintf("mock run for %s", cron.Name),
 		ExitCode:   0,
 		DurationMS: 1200,
 		StartedAt:  start,

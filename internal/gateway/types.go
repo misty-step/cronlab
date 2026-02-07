@@ -39,6 +39,8 @@ type RunResult struct {
 	CronID     string    `json:"cronId"`
 	Status     string    `json:"status"`
 	Output     string    `json:"output,omitempty"`
+	Stdout     string    `json:"stdout,omitempty"`
+	Stderr     string    `json:"stderr,omitempty"`
 	Error      string    `json:"error,omitempty"`
 	ExitCode   int       `json:"exitCode"`
 	DurationMS int64     `json:"duration_ms"`
