@@ -1,6 +1,7 @@
 package definition
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -66,8 +67,25 @@ type Duration struct {
 	time.Duration
 }
 
+func (d Duration) IsZero() bool {
+	return d.Duration == 0
+}
+
 func (d Duration) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf("%q", d.String())), nil
+}
+
+func (d *Duration) UnmarshalJSON(data []byte) error {
+	var value string
+	if err := json.Unmarshal(data, &value); err != nil {
+		return errors.New("duration must be a JSON string")
+	}
+	parsed, err := time.ParseDuration(strings.TrimSpace(value))
+	if err != nil {
+		return fmt.Errorf("invalid duration %q: %w", value, err)
+	}
+	d.Duration = parsed
+	return nil
 }
 
 func (d *Duration) UnmarshalYAML(node *yaml.Node) error {
