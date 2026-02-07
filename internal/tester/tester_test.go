@@ -3,7 +3,9 @@ package tester
 import (
 	"context"
 	"errors"
+	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -175,5 +177,70 @@ func TestSaveAndLoadReport(t *testing.T) {
 	}
 	if loaded.DefinitionName != report.DefinitionName || loaded.Status != report.Status || !loaded.Passed {
 		t.Fatalf("loaded = %+v, want %+v", loaded, report)
+	}
+}
+
+func TestSaveAndLoadReportErrors(t *testing.T) {
+	t.Parallel()
+
+	if err := SaveReport("", Report{}); err == nil {
+		t.Fatalf("SaveReport(empty) expected error")
+	}
+	if _, err := LoadReport(filepath.Join(t.TempDir(), "missing.json")); err == nil {
+		t.Fatalf("LoadReport(missing) expected error")
+	}
+
+	badPath := filepath.Join(t.TempDir(), "bad.json")
+	if err := os.WriteFile(badPath, []byte("not-json"), 0o644); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+	if _, err := LoadReport(badPath); err == nil {
+		t.Fatalf("LoadReport(bad json) expected error")
+	}
+}
+
+func TestValidationErrorFormatting(t *testing.T) {
+	t.Parallel()
+
+	if got := (ValidationError{}).Error(); !strings.Contains(got, "validation failed") {
+		t.Fatalf("ValidationError{}.Error() = %q", got)
+	}
+	got := (ValidationError{Errors: []definition.ValidationError{{Field: "x", Message: "bad"}}}).Error()
+	if !strings.Contains(got, "1 errors") {
+		t.Fatalf("ValidationError{1}.Error() = %q", got)
+	}
+}
+
+func TestRunnerCreateAndRunErrors(t *testing.T) {
+	t.Parallel()
+
+	def := validDefinition()
+	mock := gateway.NewMockClient()
+	mock.CreateFunc = func(ctx context.Context, def definition.Definition) (gateway.Cron, error) {
+		return gateway.Cron{}, errors.New("create failed")
+	}
+	runner := NewRunner(mock, nil)
+	report, err := runner.Run(context.Background(), def, Options{})
+	if err == nil || report.RunError == "" {
+		t.Fatalf("Run() expected create error with run_error, got report=%+v err=%v", report, err)
+	}
+
+	mock = gateway.NewMockClient()
+	mock.CreateFunc = func(ctx context.Context, def definition.Definition) (gateway.Cron, error) {
+		return gateway.Cron{ID: "cron-1", Name: def.Name}, nil
+	}
+	mock.RunFunc = func(ctx context.Context, id string) (gateway.RunResult, error) {
+		return gateway.RunResult{}, errors.New("run failed")
+	}
+	mock.DeleteFunc = func(ctx context.Context, id string) error {
+		return errors.New("cleanup failed")
+	}
+	runner = NewRunner(mock, nil)
+	report, err = runner.Run(context.Background(), def, Options{})
+	if err == nil {
+		t.Fatalf("Run() expected run error")
+	}
+	if report.Status != ReportStatusFail {
+		t.Fatalf("Run() report status = %s, want FAIL", report.Status)
 	}
 }

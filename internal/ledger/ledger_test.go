@@ -180,3 +180,12 @@ func TestDefaultPath(t *testing.T) {
 		t.Fatalf("DefaultPath() = %s, want .cronlab segment", path)
 	}
 }
+
+func TestStorePathAndNewExpand(t *testing.T) {
+	t.Parallel()
+
+	store := New("~/activity.jsonl")
+	if strings.HasPrefix(store.Path(), "~/") {
+		t.Fatalf("New() should expand tilde path: %s", store.Path())
+	}
+}

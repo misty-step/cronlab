@@ -245,3 +245,13 @@ func TestDeployApplyError(t *testing.T) {
 		t.Fatalf("ledger entries = %+v, want deploy_apply_failed", act.entries)
 	}
 }
+
+func TestGateErrorFormattingAndUnwrap(t *testing.T) {
+	t.Parallel()
+
+	base := errors.New("base")
+	g := GateError{Stage: StageReview, Err: base}
+	if g.Error() == "" || g.Unwrap() != base {
+		t.Fatalf("GateError methods not behaving as expected: %+v", g)
+	}
+}

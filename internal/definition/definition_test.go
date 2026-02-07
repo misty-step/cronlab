@@ -1,8 +1,11 @@
 package definition
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestParseAndValidateValidAgentTurnDefinition(t *testing.T) {
@@ -267,6 +270,93 @@ func TestOneShotExprFallback(t *testing.T) {
 	errs := Validate(def)
 	if len(errs) != 0 {
 		t.Fatalf("Validate() errors=%v, want none", errs)
+	}
+}
+
+func TestParseFile(t *testing.T) {
+	t.Parallel()
+
+	path := filepath.Join(t.TempDir(), "definition.yaml")
+	src := `
+name: file-parse
+schedule:
+  kind: cron
+  expr: "0 * * * *"
+payload:
+  kind: systemEvent
+  event: evt
+sessionTarget: main
+`
+	if err := os.WriteFile(path, []byte(src), 0o644); err != nil {
+		t.Fatalf("WriteFile() error = %v", err)
+	}
+	def, err := ParseFile(path)
+	if err != nil {
+		t.Fatalf("ParseFile() error = %v", err)
+	}
+	if def.Name != "file-parse" {
+		t.Fatalf("ParseFile() name = %q, want file-parse", def.Name)
+	}
+}
+
+func TestValidationErrorAndDurationJSON(t *testing.T) {
+	t.Parallel()
+
+	v := ValidationError{Field: "field", Message: "bad"}
+	if got := v.Error(); got != "field: bad" {
+		t.Fatalf("ValidationError.Error() = %q, want field: bad", got)
+	}
+	if got := (ValidationError{Message: "bad"}).Error(); got != "bad" {
+		t.Fatalf("ValidationError.Error(no-field) = %q, want bad", got)
+	}
+
+	var dur Duration
+	if !dur.IsZero() {
+		t.Fatalf("Duration.IsZero() expected true for zero duration")
+	}
+	if err := dur.UnmarshalJSON([]byte(`"15s"`)); err != nil {
+		t.Fatalf("Duration.UnmarshalJSON() error = %v", err)
+	}
+	if dur.IsZero() || dur.Duration != 15*time.Second {
+		t.Fatalf("Duration after unmarshal = %v, want 15s", dur.Duration)
+	}
+	encoded, err := dur.MarshalJSON()
+	if err != nil {
+		t.Fatalf("Duration.MarshalJSON() error = %v", err)
+	}
+	if string(encoded) != `"15s"` {
+		t.Fatalf("Duration.MarshalJSON() = %s, want \"15s\"", string(encoded))
+	}
+	if err := dur.UnmarshalJSON([]byte(`123`)); err == nil {
+		t.Fatalf("Duration.UnmarshalJSON(non-string) expected error")
+	}
+}
+
+func TestValidateDeliveryAndSessionTargetBranches(t *testing.T) {
+	t.Parallel()
+
+	def := &Definition{
+		Name:          "x",
+		Schedule:      Schedule{Kind: ScheduleKindCron, Expr: "0 * * * *"},
+		Payload:       Payload{Kind: PayloadKindSystemEvent, Event: "evt"},
+		SessionTarget: "unsupported",
+		Delivery:      Delivery{Mode: "loud"},
+	}
+	errs := Validate(def)
+	if !containsField(errs, "sessionTarget") || !containsField(errs, "delivery.mode") {
+		t.Fatalf("Validate() errs=%v, want sessionTarget and delivery.mode", errs)
+	}
+
+	def = &Definition{
+		Name:          "x",
+		Schedule:      Schedule{Kind: ScheduleKindCron, Expr: "0 * * * *"},
+		Payload:       Payload{Kind: PayloadKindSystemEvent, Event: "evt"},
+		SessionTarget: SessionTargetMain,
+		Expected:      Expected{MaxDuration: Duration{Duration: -time.Second}},
+	}
+	errs = Validate(def)
+	if !containsField(errs, "expected.maxDuration") {
+		t.Fatalf("Validate() errs=%v, want expected.maxDuration", errs)
 	}
 }
 

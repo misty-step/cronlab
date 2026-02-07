@@ -4,8 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 	"time"
 
@@ -167,5 +169,49 @@ func TestHTTPClientContextCancel(t *testing.T) {
 	cancel()
 	if _, err := client.List(ctx); err == nil {
 		t.Fatalf("List(canceled ctx) expected error")
+	}
+}
+
+func TestHTTPClientOptionsAndHTTPErrorString(t *testing.T) {
+	t.Parallel()
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_ = json.NewEncoder(w).Encode([]Cron{})
+	}))
+	defer server.Close()
+
+	customHTTP := &http.Client{Timeout: 2 * time.Second}
+	logger := slog.New(slog.NewJSONHandler(os.Stderr, nil))
+	client, err := NewHTTPClient(server.URL, WithHTTPClient(customHTTP), WithLogger(logger))
+	if err != nil {
+		t.Fatalf("NewHTTPClient() error = %v", err)
+	}
+	if client.httpClient != customHTTP {
+		t.Fatalf("http client option not applied")
+	}
+	if client.logger != logger {
+		t.Fatalf("logger option not applied")
+	}
+	if _, err := client.List(context.Background()); err != nil {
+		t.Fatalf("List() error = %v", err)
+	}
+
+	errStr := (HTTPError{StatusCode: 500, Body: "boom"}).Error()
+	if errStr == "" || errStr == "gateway request failed with status 500" {
+		t.Fatalf("HTTPError.Error() = %q, want message with body", errStr)
+	}
+}
+
+func TestParseErrorMessageBranches(t *testing.T) {
+	t.Parallel()
+
+	if got := parseErrorMessage([]byte(`{"error":"boom"}`)); got != "boom" {
+		t.Fatalf("parseErrorMessage(error) = %q", got)
+	}
+	if got := parseErrorMessage([]byte(`{"message":"oops"}`)); got != "oops" {
+		t.Fatalf("parseErrorMessage(message) = %q", got)
+	}
+	if got := parseErrorMessage([]byte(`not-json`)); got != "" {
+		t.Fatalf("parseErrorMessage(invalid) = %q, want empty", got)
 	}
 }
