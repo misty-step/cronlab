@@ -1,0 +1,17 @@
+name: workspace-sync
+description: 'Run workspace sync: execute ~/.openclaw/workspace/infra/workspace-sync.sh. No need to report unless it fails.'
+schedule:
+  kind: cron
+  expr: 0 */6 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: systemEvent
+  event: 'Run workspace sync: execute ~/.openclaw/workspace/infra/workspace-sync.sh. No need to report unless it fails.'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- ops
+- cron
+- system-event

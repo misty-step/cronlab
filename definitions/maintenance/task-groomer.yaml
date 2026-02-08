@@ -1,0 +1,23 @@
+name: task-groomer
+description: 'Role: Strategic task curator.'
+schedule:
+  kind: cron
+  expr: 0 14 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "Role: Strategic task curator.\n\nObjective: Groom BOTH task boards.\n\n1. **Phaedrus's board** (`~/clawd/PHAEDRUS.md`) \u2014 His action items. Remove stale items, flag overdue things, add context. This is what I remind him about via Telegram.\n\n2. **My board** (`~/.openclaw/workspace/TASKS.md`) \u2014 My operational tasks. Remove completed items, reprioritize, add anything missing.\n\nAlso: Look beyond the files. What SHOULD we be working on that isn't captured? What opportunities are we missing? Add those.\n\nLatitude: Be ruthless about removing cruft. Be creative about adding value."
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+    timeoutSeconds: 1200
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 1200s
+tags:
+- maintenance
+- cron
+- agent-turn
+delivery:
+  mode: announce

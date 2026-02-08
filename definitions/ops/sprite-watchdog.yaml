@@ -1,0 +1,16 @@
+name: sprite-watchdog
+description: 'Run sprite fleet watchdog v2: execute ~/bitterblossom/scripts/watchdog-v2.sh. If exit code 1 (NEEDS_ATTENTION): a spr...'
+schedule:
+  kind: interval
+  expr: 300000ms
+payload:
+  kind: systemEvent
+  event: "Run sprite fleet watchdog v2: execute ~/bitterblossom/scripts/watchdog-v2.sh. If exit code 1 (NEEDS_ATTENTION): a sprite completed, is blocked, or died \u2014 take immediate action. Reassign completed sprites to the highest-priority unassigned task. Investigate blocked/dead sprites. If exit code 0: all healthy, no action needed."
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- ops
+- interval
+- system-event

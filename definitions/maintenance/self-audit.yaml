@@ -1,0 +1,21 @@
+name: self-audit
+description: Run a self-audit. Read /Users/yawgmoth/.openclaw/workspace/scripts/self-audit-prompt.md and follow it precisely. Writ...
+schedule:
+  kind: cron
+  expr: 0 */4 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: agentTurn
+  message: Run a self-audit. Read /Users/yawgmoth/.openclaw/workspace/scripts/self-audit-prompt.md and follow it precisely. Write results to SELF-AUDIT.md and update lessons.md metrics.
+  data:
+    timeoutSeconds: 300
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 300s
+tags:
+- maintenance
+- cron
+- agent-turn
+delivery:
+  mode: announce

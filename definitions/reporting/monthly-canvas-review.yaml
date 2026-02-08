@@ -1,0 +1,17 @@
+name: monthly-canvas-review
+description: Monthly Business Model Canvas Review
+schedule:
+  kind: cron
+  expr: 0 17 1-7 * 1
+  tz: UTC
+payload:
+  kind: systemEvent
+  event: "\U0001F4CA Monthly Business Model Canvas Review\n\nIt's the first Monday of the month \u2014 time for our monthly canvas reviews.\n\nRead `/Users/yawgmoth/clawd/frameworks/business-model-canvas.md` for the review framework.\nCheck BMCs in `/Users/yawgmoth/clawd/bmc/` for each product.\n\nPrepare a review agenda for Phaedrus:\n1. Metrics summary for each monetized product\n2. Canvas changes/updates needed\n3. Strategic questions to discuss\n4. Competitive landscape changes"
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- reporting
+- cron
+- system-event

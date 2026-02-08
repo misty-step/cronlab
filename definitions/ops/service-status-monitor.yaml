@@ -1,0 +1,16 @@
+name: service-status-monitor
+description: Run ~/go/bin/statuscheck -json. If exit code is 1 (degraded service), alert Phaedrus via Telegram with the degraded s...
+schedule:
+  kind: interval
+  expr: 300000ms
+payload:
+  kind: agentTurn
+  message: Run ~/go/bin/statuscheck -json. If exit code is 1 (degraded service), alert Phaedrus via Telegram with the degraded services. If exit code 0, no action needed.
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- ops
+- interval
+- agent-turn

@@ -1,0 +1,20 @@
+name: google-ads-weekly-report
+description: GOOGLE ADS WEEKLY REPORT
+schedule:
+  kind: cron
+  expr: 0 18 * * 0
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "\U0001F4CA GOOGLE ADS WEEKLY REPORT\n\nCompile the weekly Google Ads performance report for Misty Step consulting.\n\n1. Open Google Ads dashboard (browser automation if needed)\n2. Gather metrics: impressions, clicks, CTR, spend, conversions\n3. Calculate CPL and compare to $50-100 target\n4. Check lead quality in tracking sheet (17ewCGlysPossM0xs6uBnI_KmxGy0nC0Nn-NFzLb6CM8)\n5. Update Weekly Reports sheet with this week's data\n6. Note any concerning trends or opportunities\n7. Make recommendations (continue/adjust/pause)\n\nDeliver: This Week Stats / Trends vs Last Week / Lead Quality / Recommendations"
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

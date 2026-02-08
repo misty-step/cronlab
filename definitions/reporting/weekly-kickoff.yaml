@@ -1,0 +1,24 @@
+name: weekly-kickoff
+description: "WEEKLY KICKOFF \u2014 Monday Planning"
+schedule:
+  kind: cron
+  expr: 30 9 * * 1
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "WEEKLY KICKOFF \u2014 Monday Planning\n\nYou are Kaylee. Plan the week and email it to Phaedrus.\n\n1. Read last week's weekly retro (if exists) \u2014 what did we learn?\n2. Read recent daily retros from ~/clawd/captains-log/\n3. Review GitHub activity: PRs merged, issues closed, across priority repos\n4. Check sprite fleet output from the past week\n5. Review TASKS.md and CONTEXT.md\n\nWrite the kickoff:\n- Last week summary (2-3 sentences)\n- This week's top 5 priorities (ranked)\n- Sprite deployment plan\n- Key milestones to hit\n- Decisions needed from Phaedrus\n- Any risks or blockers\n\nEMAIL to phaedrus@mistystep.io (CC phraznikov@gmail.com) via gog gmail send.\nSubject: \"Weekly Kickoff \u2014 Week of YYYY-MM-DD\"\n\nThen send 1-2 line Telegram confirmation. Do NOT send the full report on Telegram."
+  model: anthropic/claude-opus-4-6
+  data:
+    thinking: high
+    timeoutSeconds: 1800
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 1800s
+tags:
+- reporting
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: silent

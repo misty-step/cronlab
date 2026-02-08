@@ -1,0 +1,25 @@
+name: openclaw-research
+description: Research OpenClaw best practices, agent productivity patterns, and competitive intelligence.
+schedule:
+  kind: cron
+  expr: 0 10 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: agentTurn
+  message: "Research OpenClaw best practices, agent productivity patterns, and competitive intelligence.\n\nResearch areas:\n1. OpenClaw documentation, community discussions, power user workflows\n2. **Austin Allred / Gauntlet AI / Kelly AI** \u2014 What is his autonomous software factory doing? What can we learn?\n3. **Nat Eliason** \u2014 What AI builder patterns is he using?\n4. **SimpleClaw / ClawEye.ai** \u2014 Digital employee competitors. What are they offering? Pricing? Traction?\n5. Agent security: prompt injection defenses, hardening best practices\n6. Bitterblossom-style sprite/agent fleet management patterns\n7. Any new OpenClaw skills, tools, or integrations worth adopting\n\nDeliver: Summary of findings + specific actionable recommendations. Focus on what we should DO, not just what we learned."
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+    timeoutSeconds: 1800
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 1800s
+tags:
+- maintenance
+- cron
+- agent-turn
+- telegram
+- re-enabled
+delivery:
+  mode: announce

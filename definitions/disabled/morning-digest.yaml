@@ -1,0 +1,20 @@
+name: morning-digest
+description: MORNING DIGEST - Overnight Activity Summary
+schedule:
+  kind: cron
+  expr: 30 7 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "\U0001F305 MORNING DIGEST - Overnight Activity Summary\n\nGenerate Phaedrus's morning digest of overnight activity.\n\n1. Read memory/heartbeats/ logs from ~22:00 yesterday until now\n2. Read memory/activity/ logs for the same period\n3. Count total heartbeats that ran\n4. Summarize OODA loops executed (what was observed, what actions taken)\n5. Highlight any significant events, errors, or alerts\n6. Note any installs, builds, or infrastructure changes\n\nFormat as a brief, scannable digest:\n- \U0001F504 Heartbeats: X ran overnight\n- \U0001F4CA Actions: [summary]\n- \u26A0\uFE0F Alerts: [any issues]\n- \U0001F6E0\uFE0F Changes: [any infrastructure/tooling changes]\n\nKeep it concise - this is a quick morning briefing."
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

@@ -1,0 +1,29 @@
+name: self-improve
+description: 'Role: Reflective practitioner engaged in continuous self-improvement.'
+schedule:
+  kind: cron
+  expr: 0 18 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: 'Role: Reflective practitioner engaged in continuous self-improvement.
+
+
+    Objective: Review today''s work. What happened? What worked? What didn''t? Extract durable learnings to MEMORY.md. Identify patterns worth codifying to AGENTS.md or skills. Make at least one concrete improvement.
+
+
+    Latitude: Be honest and self-critical. Actually make changes, don''t just note them.'
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+    timeoutSeconds: 1800
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 1800s
+tags:
+- maintenance
+- cron
+- agent-turn
+delivery:
+  mode: announce

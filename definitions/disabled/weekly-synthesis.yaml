@@ -1,0 +1,20 @@
+name: weekly-synthesis
+description: WEEKLY KNOWLEDGE SYNTHESIS
+schedule:
+  kind: cron
+  expr: 0 20 * * 0
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "\U0001F504 WEEKLY KNOWLEDGE SYNTHESIS\n\nTime for weekly memory maintenance:\n\n1. Daily logs \u2192 MEMORY.md extraction\n   - Review memory/2026-*.md files from this week\n   - Extract significant learnings, decisions, patterns\n   - Append 2-3 most important items to MEMORY.md\n\n2. Knowledge graph maintenance\n   - Check life/areas/ for entity updates needed\n   - Update access counts on recently-used entities\n\n3. QMD index refresh\n   - Run: qmd update && qmd embed\n\nReport: What was synthesized, what needs attention next week."
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

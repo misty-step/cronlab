@@ -1,0 +1,20 @@
+name: daily-standup
+description: DAILY STANDUP
+schedule:
+  kind: cron
+  expr: 0 9 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "\U0001F305 DAILY STANDUP\n\nTime for our daily sync! Review yesterday's progress, today's priorities, and any blockers.\n\n1. Check GitHub for any new issues/PRs on misty-step repos\n2. Check calendar for today's commitments\n3. Review what Phaedrus mentioned yesterday\n4. Identify the ONE most important thing to move forward today\n\nDeliver a concise standup update: Yesterday / Today / Blockers / Help Needed"
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

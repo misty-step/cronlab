@@ -1,0 +1,24 @@
+name: daily-kickoff
+description: "DAILY KICKOFF \u2014 Morning Plan of Attack"
+schedule:
+  kind: cron
+  expr: 0 9 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: agentTurn
+  message: "DAILY KICKOFF \u2014 Morning Plan of Attack\n\nYou are Kaylee, Misty Step's engineering COO. Email Phaedrus your plan for today.\n\n1. Read CONTEXT.md, TASKS.md, and yesterday's daily retro (captains-log)\n2. Check today's calendar (both calendars via gog)\n3. Review sprite fleet status and active PRs\n4. Check priority repos for urgent items: cerberus, bitterblossom, overmind, moneta, vox, misty-step, moonbridge, landfall\n5. Reference the most recent weekly kickoff to ensure daily plan aligns with weekly goals\n\nWrite a clear plan:\n- Top 3 priorities for today\n- Sprite assignments planned\n- Any blockers or decisions needed from Phaedrus\n- Calendar items\n\nEMAIL to phaedrus@mistystep.io (CC phraznikov@gmail.com) via:\n```bash\ngog gmail send --to phaedrus@mistystep.io --cc phraznikov@gmail.com --subject \"Daily Kickoff \u2014 $(date +%Y-%m-%d)\" --body \"[your plan]\" --account kaylee@mistystep.io\n```\n\nThen send a 1-2 line Telegram confirmation."
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+    timeoutSeconds: 300
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 300s
+tags:
+- reporting
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

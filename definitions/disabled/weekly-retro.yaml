@@ -1,0 +1,20 @@
+name: weekly-retro
+description: WEEKLY RETRO
+schedule:
+  kind: cron
+  expr: 0 16 * * 5
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "\U0001F504 WEEKLY RETRO\n\nEnd of week reflection. What worked? What didn't? What did we learn?\n\n1. Review this week's accomplishments vs plan\n2. Identify wins to celebrate\n3. Identify misses and why\n4. Capture lessons learned\n5. Update metrics sheet with this week's numbers\n\nDeliver: Wins / Misses / Lessons / Next Week Focus"
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

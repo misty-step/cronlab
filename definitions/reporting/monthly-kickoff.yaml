@@ -1,0 +1,24 @@
+name: monthly-kickoff
+description: "MONTHLY KICKOFF \u2014 Month Planning"
+schedule:
+  kind: cron
+  expr: 0 10 2 * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "MONTHLY KICKOFF \u2014 Month Planning\n\nYou are Kaylee. Plan the month and email it to Phaedrus.\n\n1. Read last month's monthly retro \u2014 what did we learn?\n2. Read recent weekly retros for trends\n3. Review GitHub milestones: what's due, what's behind\n4. Review priority repo backlogs\n5. Check TASKS.md and CONTEXT.md\n\nWrite the kickoff:\n- Last month summary (3-4 sentences)\n- This month's top priorities (ranked by repo)\n- Key milestones to hit this month\n- Sprite fleet deployment strategy\n- Product launch targets\n- Decisions needed from Phaedrus\n- Risks and mitigations\n\nEMAIL to phaedrus@mistystep.io (CC phraznikov@gmail.com) via gog gmail send.\nSubject: \"Monthly Kickoff \u2014 MONTH YYYY\"\n\nThen send 1-2 line Telegram confirmation."
+  model: anthropic/claude-opus-4-6
+  data:
+    thinking: high
+    timeoutSeconds: 1800
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 1800s
+tags:
+- reporting
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

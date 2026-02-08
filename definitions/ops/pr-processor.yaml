@@ -1,0 +1,16 @@
+name: pr-processor
+description: 'Run PR processor: execute bash ~/.openclaw/workspace/infra/pr-processor.sh. If exit code 1 (needs attention), review...'
+schedule:
+  kind: interval
+  expr: 7200000ms
+payload:
+  kind: systemEvent
+  event: 'Run PR processor: execute bash ~/.openclaw/workspace/infra/pr-processor.sh. If exit code 1 (needs attention), review the output and take action on flagged PRs. If exit code 0, no action needed.'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- ops
+- interval
+- system-event

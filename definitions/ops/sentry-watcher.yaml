@@ -1,0 +1,16 @@
+name: sentry-watcher
+description: 'Run Sentry watcher: execute ~/bitterblossom/scripts/sentry-watcher.sh. If output JSON shows new unresolved issues or...'
+schedule:
+  kind: interval
+  expr: 900000ms
+payload:
+  kind: systemEvent
+  event: 'Run Sentry watcher: execute ~/bitterblossom/scripts/sentry-watcher.sh. If output JSON shows new unresolved issues or error spikes (>50 events/hour), report findings and investigate. If all clear, no action needed.'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- ops
+- interval
+- system-event

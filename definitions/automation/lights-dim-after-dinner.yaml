@@ -1,0 +1,17 @@
+name: lights-dim-after-dinner
+description: '7:00 PM: Dim all Hue lights to 70%'
+schedule:
+  kind: cron
+  expr: 0 19 * * *
+  tz: America/Chicago
+payload:
+  kind: systemEvent
+  event: '7:00 PM: Dim all Hue lights to 70%'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- automation
+- cron
+- system-event

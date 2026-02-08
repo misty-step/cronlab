@@ -1,0 +1,16 @@
+name: jiminy-cricket
+description: 'Run sprite early visibility check: execute bash ~/.openclaw/workspace/infra/sprite-early-check.sh. If exit code 1 (NE...'
+schedule:
+  kind: interval
+  expr: 600000ms
+payload:
+  kind: systemEvent
+  event: 'Run sprite early visibility check: execute bash ~/.openclaw/workspace/infra/sprite-early-check.sh. If exit code 1 (NEEDS_ATTENTION): a sprite is dead or hasn''t branched in >10min. Investigate immediately. If exit code 0, no action needed.'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- ops
+- interval
+- system-event

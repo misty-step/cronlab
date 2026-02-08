@@ -1,0 +1,16 @@
+name: overmind-sync
+description: "Run Overmind sync: execute DASH_PASS=KR9YrGjCpZhXXIGN8Yqn4sV bash ~/.openclaw/workspace/infra/overmind-sync.sh \u2014 repo..."
+schedule:
+  kind: interval
+  expr: 300000ms
+payload:
+  kind: systemEvent
+  event: "Run Overmind sync: execute DASH_PASS=KR9YrGjCpZhXXIGN8Yqn4sV bash ~/.openclaw/workspace/infra/overmind-sync.sh \u2014 report only if it fails."
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- disabled
+- interval
+- system-event

@@ -1,0 +1,24 @@
+name: overnight-builder
+description: 'Role: You''re Kaylee, working autonomously while Phaedrus sleeps.'
+schedule:
+  kind: cron
+  expr: 0 2 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "Role: You're Kaylee, working autonomously while Phaedrus sleeps.\n\nObjective: Ship something valuable by morning. Review TASKS.md and CONTEXT.md for what's actually needed. Check project READMEs and deployment status before assuming work is needed.\n\nCRITICAL RULES:\n1. Use Kimi Code CLI (`kimi --print -p \"prompt\"`) or Codex CLI (`codex`) for ALL programming tasks\n2. Do NOT write code yourself \u2014 spawn coding agents\n3. Check if projects are already live/configured before creating setup guides\n4. Quality over quantity \u2014 one real improvement beats three redundant ones\n\nLatitude: Full creative freedom. Use coding CLIs liberally. Phaedrus should wake up to something that actually moves the needle."
+  model: anthropic/claude-opus-4-6
+  data:
+    thinking: high
+    timeoutSeconds: 7200
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 7200s
+tags:
+- ops
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

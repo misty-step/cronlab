@@ -1,0 +1,34 @@
+name: github-issue-scan
+description: 'PROACTIVE ENGINEERING: Scan misty-step GitHub repos for issues I can help with.'
+schedule:
+  kind: cron
+  expr: 0 11 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: 'PROACTIVE ENGINEERING: Scan misty-step GitHub repos for issues I can help with.
+
+
+    1. Check all misty-step repos for open issues
+
+    2. Identify high-priority issues I could tackle
+
+    3. Look for good-first-issue or bug labels
+
+    4. If I find something actionable, spawn a coding agent to work on a PR
+
+    5. Report any interesting findings
+
+
+    Be a responsive engineer - find work before being asked.'
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

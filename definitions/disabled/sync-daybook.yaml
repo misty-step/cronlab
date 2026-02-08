@@ -1,0 +1,35 @@
+name: sync-daybook
+description: 'SYNC: Pull latest daybook updates.'
+schedule:
+  kind: cron
+  expr: 0 7 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: 'SYNC: Pull latest daybook updates.
+
+
+    1. cd /Users/yawgmoth/clawd/daybook && git pull
+
+    2. Check for new journal entries
+
+    3. Check for strategy/planning updates
+
+    4. Note any significant changes for context
+
+
+    This is a background sync - no delivery unless something important changed.'
+  model: openrouter/google/gemini-2.5-flash-lite
+  data:
+    thinking: 'off'
+    timeoutSeconds: 300
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 300s
+tags:
+- disabled
+- cron
+- agent-turn
+delivery:
+  mode: announce

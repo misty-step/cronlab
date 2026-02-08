@@ -1,0 +1,39 @@
+name: self-reflection
+description: 'SELF-REFLECTION LOOP. Follow the protocol in docs/self-reflection-protocol.md:'
+schedule:
+  kind: cron
+  expr: 0 0 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: agentTurn
+  message: 'SELF-REFLECTION LOOP. Follow the protocol in docs/self-reflection-protocol.md:
+
+
+    1. Read today''s memory/YYYY-MM-DD.md to review all activity since the last reflection
+
+    2. Perform honest self-assessment: Agency? Quality? Value creation? Communication? Failures?
+
+    3. Synthesize findings into actionable notes
+
+    4. Write reflection summary to today''s memory file
+
+    5. If systemic lessons emerged, update AGENTS.md or relevant docs
+
+    6. If anything needs Phaedrus''s attention, message him
+
+
+    Be genuinely critical. The goal is compounding improvement, not self-congratulation.'
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+    timeoutSeconds: 300
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 300s
+tags:
+- disabled
+- cron
+- agent-turn
+delivery:
+  mode: silent

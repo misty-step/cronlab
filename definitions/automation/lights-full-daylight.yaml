@@ -1,0 +1,17 @@
+name: lights-full-daylight
+description: '9:30 AM: Set all Hue lights to 100% daylight (300 Mirek)'
+schedule:
+  kind: cron
+  expr: 30 9 * * *
+  tz: America/Chicago
+payload:
+  kind: systemEvent
+  event: '9:30 AM: Set all Hue lights to 100% daylight (300 Mirek)'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- automation
+- cron
+- system-event

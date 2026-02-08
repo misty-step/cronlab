@@ -1,0 +1,24 @@
+name: quarterly-review
+description: QUARTERLY BUSINESS REVIEW
+schedule:
+  kind: cron
+  expr: 0 10 1 1,4,7,10 *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "\U0001F3AF QUARTERLY BUSINESS REVIEW\n\nBig picture strategic review. Vision, direction, major decisions.\n\n1. Review quarter metrics and progress\n2. Assess strategic position vs goals\n3. Review competitive landscape\n4. Evaluate product portfolio strategy\n5. Plan next quarter OKRs\n6. Identify major pivots or bets needed\n\nPerspectives: Full executive team analysis\n\nDeliver: Quarter Summary / Strategic Position / Portfolio Assessment / Next Quarter OKRs / Major Decisions / Vision Check"
+  model: anthropic/claude-opus-4-6
+  data:
+    thinking: high
+    timeoutSeconds: 3600
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 3600s
+tags:
+- reporting
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

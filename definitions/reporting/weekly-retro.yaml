@@ -1,0 +1,24 @@
+name: weekly-retro
+description: "WEEKLY RETRO \u2014 Friday Review"
+schedule:
+  kind: cron
+  expr: 0 17 * * 5
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "WEEKLY RETRO \u2014 Friday Review\n\nYou are Kaylee. Review the week and email it to Phaedrus.\n\n1. Read this week's weekly kickoff \u2014 what did we PLAN?\n2. Read all daily retros from this week (~/clawd/captains-log/)\n3. Review GitHub activity: PRs merged, issues closed, across priority repos\n4. Review sprite fleet output\n5. Read memory files from the week\n\nWrite the retro:\n- What we planned vs what we actually did\n- Key achievements this week\n- What worked well\n- What didn\u2019t work / friction / failures\n- Learnings to carry forward\n- Sprite fleet performance summary\n- Recommendations for next week\n\nEMAIL to phaedrus@mistystep.io (CC phraznikov@gmail.com) via gog gmail send.\nSubject: \"Weekly Retro \u2014 Week of YYYY-MM-DD\"\n\nThen send 1-2 line Telegram confirmation."
+  model: anthropic/claude-opus-4-6
+  data:
+    thinking: high
+    timeoutSeconds: 1800
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 1800s
+tags:
+- reporting
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

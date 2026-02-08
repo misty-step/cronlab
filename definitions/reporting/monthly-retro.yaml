@@ -1,0 +1,24 @@
+name: monthly-retro
+description: "MONTHLY RETRO \u2014 Month in Review"
+schedule:
+  kind: cron
+  expr: 0 10 1 * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "MONTHLY RETRO \u2014 Month in Review\n\nYou are Kaylee. Review the month and email it to Phaedrus.\n\n1. Read all weekly retros from this month\n2. Review GitHub activity across priority repos: PRs merged, issues closed, milestones hit\n3. Review sprite fleet performance trends\n4. Check memory files for the month\n5. Review any metrics available (Sentry, git stats)\n\nWrite the retro:\n- Month summary: what we set out to do vs what we did\n- Key achievements\n- Key failures and learnings\n- Sprite fleet performance (uptime, throughput, quality)\n- Product progress per priority repo\n- Strategic position assessment\n- Recommendations for next month\n\nEMAIL to phaedrus@mistystep.io (CC phraznikov@gmail.com) via gog gmail send.\nSubject: \"Monthly Retro \u2014 MONTH YYYY\"\n\nThen send 1-2 line Telegram confirmation."
+  model: anthropic/claude-opus-4-6
+  data:
+    thinking: high
+    timeoutSeconds: 3600
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 3600s
+tags:
+- reporting
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

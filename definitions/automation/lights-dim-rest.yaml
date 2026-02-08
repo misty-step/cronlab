@@ -1,0 +1,17 @@
+name: lights-dim-rest
+description: '11:00 PM: Dim Rest mode to 60%'
+schedule:
+  kind: cron
+  expr: 0 23 * * *
+  tz: America/Chicago
+payload:
+  kind: systemEvent
+  event: '11:00 PM: Dim Rest mode to 60%'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- automation
+- cron
+- system-event

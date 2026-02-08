@@ -1,0 +1,20 @@
+name: daily-claude-tips
+description: 'Compile Claude Code / Clawdbot power user digest: Search Twitter, Reddit, and HN for the latest Claude Code, OpenClau...'
+schedule:
+  kind: cron
+  expr: 0 10 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: 'Compile Claude Code / Clawdbot power user digest: Search Twitter, Reddit, and HN for the latest Claude Code, OpenClaude, and Clawdbot tips, tricks, workflows, and power user stories from the last 24-48 hours. Look for ways we can improve our setup. Share the best finds.'
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

@@ -1,0 +1,22 @@
+name: self-care
+description: 'Run the self-care health check: `~/.openclaw/workspace/infra/self-care.sh`. Review findings. Fix anything flagged. If...'
+schedule:
+  kind: cron
+  expr: 0 */8 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: agentTurn
+  message: "Run the self-care health check: `~/.openclaw/workspace/infra/self-care.sh`. Review findings. Fix anything flagged. If memory files need pruning or distilling, do it. If OpenClaw needs updating, do it. If daily notes need writing, start one. This is your top priority \u2014 self-care enables everything else."
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- maintenance
+- cron
+- agent-turn
+delivery:
+  mode: silent

@@ -1,0 +1,16 @@
+name: stay-aware
+description: 'Run inbox check: execute bash ~/.openclaw/workspace/infra/inbox-zero.sh. If exit code 1 (NEEDS_ATTENTION), review fla...'
+schedule:
+  kind: interval
+  expr: 7200000ms
+payload:
+  kind: systemEvent
+  event: 'Run inbox check: execute bash ~/.openclaw/workspace/infra/inbox-zero.sh. If exit code 1 (NEEDS_ATTENTION), review flagged emails and handle them (archive noise, note actionable items, report urgent). If exit code 0, no action needed.'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- ops
+- interval
+- system-event

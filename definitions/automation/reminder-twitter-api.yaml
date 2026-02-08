@@ -1,0 +1,16 @@
+name: reminder-twitter-api
+description: 'Reminder for Phaedrus: Look into Twitter/X API access for @mistystep. Estimated ~$200/mo. Evaluate if worth it for or...'
+schedule:
+  kind: one-shot
+  at: '2026-02-19T17:30:00.000Z'
+payload:
+  kind: systemEvent
+  event: "\U0001F514 Reminder for Phaedrus: Look into Twitter/X API access for @mistystep. Estimated ~$200/mo. Evaluate if worth it for organic posting via Claw."
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- automation
+- one-shot
+- system-event

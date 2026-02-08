@@ -1,0 +1,23 @@
+name: cofounder-reflection
+description: COFOUNDER REFLECTION - Wednesday Thinking Time
+schedule:
+  kind: cron
+  expr: 0 14 * * 3
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: "\U0001F9E0 COFOUNDER REFLECTION - Wednesday Thinking Time\n\nStep back and think strategically about Misty Step.\n\n1. What's the highest-impact work we could be doing?\n2. What opportunities are we missing?\n3. What threats should we be aware of?\n4. What tools or processes could make us more effective?\n5. What should I be learning or building to be a better cofounder?\n\nBe creative, be bold, think like an owner.\n\nDeliver thoughtful insights and actionable suggestions."
+  model: opus
+  data:
+    thinking: medium
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

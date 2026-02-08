@@ -1,0 +1,38 @@
+name: openclaw-update-check
+description: Check for OpenClaw updates.
+schedule:
+  kind: cron
+  expr: 0 6 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: agentTurn
+  message: 'Check for OpenClaw updates.
+
+
+    1. Run `npm outdated -g openclaw` to check npm registry
+
+    2. Run `openclaw --version` to get current version
+
+    3. If update available via npm, run `npm update -g openclaw`
+
+    4. After update, restart gateway with `gateway action:restart`
+
+    5. If no npm update, check https://github.com/openclaw/openclaw/releases for pre-release notes
+
+
+    Deliver: Only if update was applied OR significant new release is coming.'
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+    timeoutSeconds: 600
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- maintenance
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

@@ -1,0 +1,23 @@
+name: daily-retro
+description: "DAILY RETRO \u2014 End of Day Review"
+schedule:
+  kind: cron
+  expr: 59 23 * * *
+  tz: America/Los_Angeles
+payload:
+  kind: agentTurn
+  message: "DAILY RETRO \u2014 End of Day Review\n\nYou are Kaylee. Write your daily retro and email it to Phaedrus.\n\n1. Read today's memory file (memory/YYYY-MM-DD.md)\n2. Read today's daily kickoff email (what did we PLAN to do?)\n3. Compare: what did we actually do vs what we planned?\n4. Review git activity across priority repos: cerberus, bitterblossom, overmind, moneta, vox, misty-step, moonbridge, landfall\n5. Review sprite output: PRs opened, merged, issues closed\n\nWrite the retro:\n- What got done today\n- What didn\u2019t get done and why\n- What worked well\n- What didn\u2019t work / friction encountered\n- Learnings and insights\n- Sprite fleet status summary\n- What should carry over to tomorrow\n\nSave to ~/clawd/captains-log/YYYY-MM-DD.md, git commit+push.\n\nEMAIL to phaedrus@mistystep.io (CC phraznikov@gmail.com) via gog gmail send.\nSubject: \"Daily Retro \u2014 YYYY-MM-DD\"\n\nThen send 1-2 line Telegram confirmation."
+  model: openrouter/moonshotai/kimi-k2.5
+  data:
+    thinking: high
+    timeoutSeconds: 300
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 300s
+tags:
+- reporting
+- cron
+- agent-turn
+delivery:
+  mode: announce

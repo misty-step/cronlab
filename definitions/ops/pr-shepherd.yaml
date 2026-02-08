@@ -1,0 +1,16 @@
+name: pr-shepherd
+description: 'Run PR age alert: execute bash ~/.openclaw/workspace/infra/pr-age-alert.sh. If exit code 1 (stale PRs found): triage...'
+schedule:
+  kind: interval
+  expr: 3600000ms
+payload:
+  kind: systemEvent
+  event: "Run PR age alert: execute bash ~/.openclaw/workspace/infra/pr-age-alert.sh. If exit code 1 (stale PRs found): triage them \u2014 close abandoned ones, merge ready ones, rebase conflicting ones. If exit code 0, no action needed."
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- ops
+- interval
+- system-event

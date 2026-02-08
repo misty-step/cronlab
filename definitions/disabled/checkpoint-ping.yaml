@@ -1,0 +1,17 @@
+name: checkpoint-ping
+description: 'CHECKPOINT: Update CONTEXT.md with current conversation state (focus, facts, decisions, questions). If nothing signif...'
+schedule:
+  kind: cron
+  expr: '*/10 * * * *'
+  tz: America/Chicago
+payload:
+  kind: systemEvent
+  event: 'CHECKPOINT: Update CONTEXT.md with current conversation state (focus, facts, decisions, questions). If nothing significant, reply HEARTBEAT_OK.'
+sessionTarget: main
+expected:
+  description: System event handled without errors or follow-up alerts unless action is required.
+  maxDuration: 30s
+tags:
+- disabled
+- cron
+- system-event

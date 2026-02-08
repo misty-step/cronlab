@@ -1,0 +1,24 @@
+name: reminder-manager-account
+description: Check on the Google Ads Manager Account setup reminder. If still relevant, send a friendly nudge. If it seems like th...
+schedule:
+  kind: cron
+  expr: 0 20 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: Check on the Google Ads Manager Account setup reminder. If still relevant, send a friendly nudge. If it seems like this has been completed or is no longer relevant, disable this cron job.
+  model: openrouter/google/gemini-2.5-flash-lite
+  data:
+    thinking: 'off'
+    timeoutSeconds: 300
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 300s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce

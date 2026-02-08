@@ -1,0 +1,20 @@
+name: daily-hn-digest
+description: 'Compile today''s Hacker News digest: Check the top 10-15 HN stories from the last 24 hours. Summarize what''s trending...'
+schedule:
+  kind: cron
+  expr: 0 8 * * *
+  tz: America/Chicago
+payload:
+  kind: agentTurn
+  message: 'Compile today''s Hacker News digest: Check the top 10-15 HN stories from the last 24 hours. Summarize what''s trending in tech, any AI/ML breakthroughs, startup news, and anything Phaedrus would find interesting as a software engineer and entrepreneur. Keep it concise but insightful.'
+sessionTarget: isolated
+expected:
+  description: Agent completes the requested turn and returns a coherent result without runtime errors.
+  maxDuration: 600s
+tags:
+- disabled
+- cron
+- agent-turn
+- telegram
+delivery:
+  mode: announce
